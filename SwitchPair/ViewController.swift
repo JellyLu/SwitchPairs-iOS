@@ -20,6 +20,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         NameCell.register(self.tableView)
+        AddNameCell.register(self.tableView)
 
     }
 
@@ -35,6 +36,12 @@ class ViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate
         
     }
 
+    func addCoder(name: String!){
+        let coder = NameCellModel(name: name, isSelected: false)
+        mainViewModel.addCoder(coder)
+        tableView.reloadData()
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -47,11 +54,13 @@ class ViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-        if indexPath.row == mainViewModel.getCodersCount() {
+        if indexPath.row == mainViewModel.getCodersCount(searchBar.text ?? "") {
             let cell: AddNameCell = tableView.dequeueReusableCellWithIdentifier(AddNameCell.cellIdentifier, forIndexPath: indexPath) as! AddNameCell
+            cell.addAction = addCoder
             return cell
         } else {
             let cell: NameCell = tableView.dequeueReusableCellWithIdentifier(NameCell.cellIdentifier, forIndexPath: indexPath) as! NameCell
+            print(mainViewModel.getCoders(searchBar.text ?? ""))
             cell.bind(mainViewModel.getCoders(searchBar.text ?? "")[indexPath.row])
             return cell
         }
@@ -63,7 +72,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if indexPath.row == mainViewModel.getCodersCount() {
+        if indexPath.row == mainViewModel.getCodersCount(searchBar.text ?? "") {
             let name = (tableView.cellForRowAtIndexPath(indexPath) as! AddNameCell).nameText.text ?? ""
             let coder = NameCellModel(name: name, isSelected: false)
             mainViewModel.addCoder(coder)

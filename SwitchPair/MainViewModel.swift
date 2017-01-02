@@ -13,9 +13,15 @@ class MainViewModel {
 
     init() {
         self.allCoders = [
-            NameCellModel(name: "Yang", isSelected: false),
-            NameCellModel(name: "Jie", isSelected: false),
-            NameCellModel(name: "Yangjie", isSelected: false)
+            NameCellModel(name: "J", isSelected: true),
+            NameCellModel(name: "BearClaw", isSelected: true),
+            NameCellModel(name: "Zhen", isSelected: true),
+            NameCellModel(name: "Yu", isSelected: true),
+            NameCellModel(name: "Wen", isSelected: true),
+            NameCellModel(name: "Evan", isSelected: true),
+            NameCellModel(name: "Siyang", isSelected: true),
+            NameCellModel(name: "Funfun", isSelected: true),
+            NameCellModel(name: "Bobo", isSelected: false)
         ]
     }
 
@@ -46,11 +52,16 @@ class MainViewModel {
 
     func changeCoderState(indexPath: NSIndexPath, text: String = "") {
         if text != "" {
-           var coder = filterCoders[indexPath.row]
-            coder.isSelected = !coder.isSelected
-            allCoders.filter({$0.name == coder.name}).first?.isSelected
+            filterCoders[indexPath.row].isSelected = !filterCoders[indexPath.row].isSelected
+            allCoders = allCoders.map({
+                if ($0.name == filterCoders[indexPath.row].name) {
+                    return filterCoders[indexPath.row]
+                }
+                return $0
+            })
+        } else {
+            allCoders[indexPath.row].isSelected = !allCoders[indexPath.row].isSelected
         }
-        allCoders[indexPath.row].isSelected = !allCoders[indexPath.row].isSelected
     }
 
     func selectedCoders() -> [NameCellModel] {

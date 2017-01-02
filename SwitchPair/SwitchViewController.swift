@@ -20,6 +20,8 @@ class SwitchViewController: UIViewController {
 
         UIApplication.sharedApplication().applicationSupportsShakeToEdit = true
         becomeFirstResponder()
+
+        self.nameLabel.text = self.viewModel.getCurrentCoder().name
     }
 
     func bindViewModel(viewModel: SwitchViewModel) {
@@ -27,19 +29,19 @@ class SwitchViewController: UIViewController {
     }
 
     func shake() {
-        UIView.animateKeyframesWithDuration(1, delay: 0, options: UIViewKeyframeAnimationOptions.BeginFromCurrentState, animations: { () -> Void in
+        UIView.animateKeyframesWithDuration(1.5, delay: 0, options: UIViewKeyframeAnimationOptions.BeginFromCurrentState, animations: { () -> Void in
 
         }, completion: { (Bool) -> Void in
-            UIView.animateKeyframesWithDuration(1, delay: 0, options: UIViewKeyframeAnimationOptions.BeginFromCurrentState, animations: { () -> Void in
+            UIView.animateKeyframesWithDuration(1.5, delay: 0, options: UIViewKeyframeAnimationOptions.BeginFromCurrentState, animations: { () -> Void in
                     self.changePair()
                 }, completion: { (Bool) -> Void in
-                    UIView.animateKeyframesWithDuration(1, delay: 0, options: UIViewKeyframeAnimationOptions.BeginFromCurrentState, animations: { () -> Void in
+                    UIView.animateKeyframesWithDuration(1.5, delay: 0, options: UIViewKeyframeAnimationOptions.BeginFromCurrentState, animations: { () -> Void in
                         self.changePair()
                         }, completion: { (Bool) -> Void in
                             UIView.animateKeyframesWithDuration(1, delay: 0, options: UIViewKeyframeAnimationOptions.BeginFromCurrentState, animations: { () -> Void in
                                 self.changePair()
                                 }, completion:  { (Bool) -> Void in
-                                    UIView.animateKeyframesWithDuration(1, delay: 0, options: UIViewKeyframeAnimationOptions.BeginFromCurrentState, animations: { () -> Void in
+                                    UIView.animateKeyframesWithDuration(1.5, delay: 0, options: UIViewKeyframeAnimationOptions.BeginFromCurrentState, animations: { () -> Void in
                                         self.changePair()
                                         }, completion:nil)
                             })
@@ -55,17 +57,16 @@ class SwitchViewController: UIViewController {
 
     override func motionBegan(motion: UIEventSubtype, withEvent event: UIEvent?) {
         print("begin")
+        if motion == .MotionShake{
+            shake()
+        }
     }
-
 
     override func motionCancelled(motion: UIEventSubtype, withEvent event: UIEvent?) {
         print("cancel")
     }
 
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-        if motion == .MotionShake{
-            shake()
-        }
         print("end")
     }
 

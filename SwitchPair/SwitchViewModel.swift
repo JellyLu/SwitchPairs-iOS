@@ -12,7 +12,7 @@ import UIKit
 class SwitchViewModel {
     private var selectCoders: [NameCellModel] = []
     private var currentCoder: NameCellModel!
-    private let colors: [UIColor] = [UIColor.redColor(), UIColor.purpleColor(), UIColor.blueColor(), UIColor.greenColor(), UIColor.yellowColor()]
+    private let colors: [UIColor] = [UIColor.redColor(), UIColor.purpleColor(), UIColor.blueColor(), UIColor.greenColor(), UIColor.yellowColor(), UIColor.grayColor(), UIColor.whiteColor()]
 
     func bind(selectedCoders: [NameCellModel]) {
         self.selectCoders = selectedCoders

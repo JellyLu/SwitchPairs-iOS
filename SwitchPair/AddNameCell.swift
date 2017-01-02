@@ -14,9 +14,12 @@ class AddNameCell: UITableViewCell {
     @IBOutlet weak var addBtn: UIButton!
     @IBOutlet weak var nameText: UITextField!
     static let cellIdentifier = "AddNameCell"
+    var addAction: ((name: String) -> ())?
 
     @IBAction func add() {
-        print(nameText.text)
+        if ((addAction != nil) && (nameText.text != "")) {
+            addAction?(name: nameText.text!)
+        }
     }
 
     class func register(tableView: UITableView) {
